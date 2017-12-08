@@ -4,7 +4,9 @@
 	<meta charset="utf-8">
 	<title>123</title>
 	<style type="text/css">
+		body { position: relative; overflow: hidden; }
 		div { width: 200px; height: 200px; background: #ddd; }
+		#myCanvas { height: 100vh;width: 100vw;background: #fff; position: absolute; z-index: 99999; }
 	</style>
 </head>
 <body>
@@ -72,7 +74,8 @@
 		        PaperBoy6: "images/6.jpg" 
 		    }; 
 		    function main() {
-		    	alert("123");
+		    	document.getElementById('myCanvas').style.display = "none";
+		    	document.body.style.overflow = "auto";
 		    }   
 		    //执行图片预加载，加载完成后执行main
 		    loadImages(sources,main);    
