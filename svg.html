@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>123</title>
+	<style type="text/css">
+		div { width: 200px; height: 200px; background: #ddd; }
+		.div1 { background:url(images/1.jpg); }
+		.div2 { background:url(images/2.jpg); }
+		.div3 { background:url(images/3.jpg); }
+		.div4 { background:url(images/4.jpg); }
+		.div5 { background:url(images/5.jpg); }
+		.div6 { background:url(images/6.jpg); }
+	</style>
+</head>
+<body>
+	<div class="div1"></div>
+	<div class="div2"></div>
+	<div class="div3"></div>
+	<div class="div4"></div>
+	<div class="div5"></div>
+	<div class="div6"></div>
+	<canvas id="myCanvas" width="1000" height="1000">your browser does not support the canvas tag </canvas>
+	<script type="text/javascript">
+		/*start
+		 *loading模块
+		 *实现图片的预加载，并显示进度条
+		 *参数：图片数组对象，加载完成的回调函数
+		 */
+		function loadImages(sources,callback){    
+		    var loadedImages = 0;    
+		    var numImages = 0;  
+		    var canvas=document.getElementById('myCanvas');
+			var ctx=canvas.getContext('2d');
+		    ctx.font='14px bold';
+		    ctx.lineWidth=5;
+		    var clearWidth=canvas.width;
+		    var clearHeight=canvas.height;
+		    // get num of sources    
+		    for (var src in sources) {    
+		        numImages++;    
+		    }    
+		    for (var src in sources) { 
+		    	console.log(src,sources[src]);   
+		        var a = new Image();
+		        a.src = sources[src];  
+		        //当一张图片加载完成时执行    
+		        a.onload = function(){ 
+		        	//当所有图片加载完成时，执行回调函数callback
+		            if (++loadedImages >= numImages) {    
+		                callback();    
+		            } 
+		            //重绘一个进度条
+		            ctx.clearRect(0,0,clearWidth,clearHeight);
+		            ctx.fillText('Loading:'+loadedImages+'/'+numImages,200,280);
+		            ctx.save();
+		            ctx.strokeStyle='#555';
+		            ctx.beginPath();
+		            ctx.moveTo(200,300);
+		            ctx.lineTo(600,300);
+		            ctx.stroke();
+		            ctx.beginPath();
+		            ctx.restore();
+		            ctx.moveTo(200,300);
+		            ctx.lineTo(loadedImages/numImages*400+200,300);  
+		            ctx.stroke(); 
+		        };  	          
+		    }    
+		}    
+		//定义预加载图片数组对象，执行loading模块
+		window.onload = function(){    
+		    var sources = {    
+		        PaperBoy1: "images/1.jpg",    
+		        PaperBoy2: "images/2.jpg", 
+		        PaperBoy3: "images/3.jpg",    
+		        PaperBoy4: "images/4.jpg",  
+		        PaperBoy5: "images/5.jpg",    
+		        PaperBoy6: "images/6.jpg" 
+		    }; 
+		    function main() {
+		    	alert("123");
+		    }   
+		    //执行图片预加载，加载完成后执行main
+		    loadImages(sources,main);    
+		};   
+		/*end*/
+	</script>
+</body>
+</html>
